@@ -1,0 +1,9 @@
+version: 2
+
+sources:
+  - name: DB_Connection
+    database: DBT
+    schema: landing_zone
+    tables:
+      - name: customer
+      - name: transaction
