@@ -1,0 +1,49 @@
+version: 2
+
+sources:
+  - name: DB_Connection
+    database: snow_project1
+    schema: LANDING_ZONE
+
+    tables:
+      - name: TRANSACTION
+      - name: CUSTOMER
+
+models:
+  - name: transaction_bronze
+    description: "Raw transaction data"
+
+    columns:
+      - name: transaction_id
+        tests:
+          - unique
+          - not_null
+
+  - name: transaction_silver
+    description: "Cleaned and validated transaction data"
+
+    columns:
+      - name: transaction_id
+        tests:
+          - unique
+          - not_null
+
+      - name: customer_id
+        tests:
+          - not_null
+
+      - name: transaction_amount
+        tests:
+          - not_null
+
+  - name: transaction_gold
+    description: "Business-ready transaction data"
+
+  - name: customer_dynamic
+    description: "Customer dimension table"
+
+    columns:
+      - name: customer_id
+        tests:
+          - unique
+          - not_null
