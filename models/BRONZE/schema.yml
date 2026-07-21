@@ -1,0 +1,32 @@
+version: 2
+
+sources:
+  - name: DB_Connection
+    database: DBT
+    schema: LANDING_ZONE
+
+    tables:
+      - name: transaction
+        columns:
+          - name: transaction_id
+            tests:
+              - unique
+              - not_null
+
+
+models:
+  - name: ts_bronze
+    description: "Bronze transaction model"
+
+    columns:
+      - name: transaction_id
+        tests:
+          - unique
+          - not_null
+
+      - name: transaction_type
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['credit', 'out']
+        
