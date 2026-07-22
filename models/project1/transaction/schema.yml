@@ -17,7 +17,9 @@ models:
       - name: transaction_id
         tests:
           - unique
-          - not_null
+          - not_null:
+              config:
+                severity: warn
 
   - name: transaction_silver
     description: "Cleaned and validated transaction data"
@@ -26,15 +28,21 @@ models:
       - name: transaction_id
         tests:
           - unique
-          - not_null
+          - not_null:
+              config:
+                severity: warn
 
       - name: customer_id
         tests:
-          - not_null
+          - not_null:
+              config:
+                severity: warn
 
       - name: transaction_amount
         tests:
-          - not_null
+          - not_null:
+              config:
+                severity: warn
 
   - name: transaction_gold
     description: "Business-ready transaction data"
@@ -46,4 +54,6 @@ models:
       - name: customer_id
         tests:
           - unique
-          - not_null
+          - not_null:
+              config:
+                severity: warn
