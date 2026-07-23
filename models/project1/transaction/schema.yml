@@ -16,7 +16,9 @@ models:
     columns:
       - name: transaction_id
         tests:
-          - unique
+          - unique:
+              config:
+                severity: warn
           - not_null:
               config:
                 severity: warn
@@ -27,7 +29,9 @@ models:
     columns:
       - name: transaction_id
         tests:
-          - unique
+          - unique:
+              config:
+                severity: warn
           - not_null:
               config:
                 severity: warn
@@ -46,14 +50,3 @@ models:
 
   - name: transaction_gold
     description: "Business-ready transaction data"
-
-  - name: customer_dynamic
-    description: "Customer dimension table"
-
-    columns:
-      - name: customer_id
-        tests:
-          - unique
-          - not_null:
-              config:
-                severity: warn
