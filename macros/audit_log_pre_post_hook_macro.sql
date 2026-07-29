@@ -1,9 +1,9 @@
 {% macro audit_pre_hook(source_name, source_table) %}
 
-INSERT INTO SN_CITI_1.AUDIT.ETL_AUDIT_LOG
+INSERT INTO DBT_CITI_1.AUDIT_LOG.DBT_AUDIT_LOGG
 (
-    BATCH_ID,
-    PIPELINE_NAME,
+    INVOCATION_ID,
+    MODEL_NAME,
     SOURCE_TABLE,
     TARGET_TABLE,
     LOAD_TYPE,
@@ -15,52 +15,41 @@ INSERT INTO SN_CITI_1.AUDIT.ETL_AUDIT_LOG
 )
 
 SELECT
-
-'{{ invocation_id }}',
-
-'{{ this.identifier }}',
-
-'{{ source_name }}.{{ source_table }}',
-
-'{{ this }}',
-
-'{% if is_incremental() %}INCREMENTAL{% else %}FULL{% endif %}',
-
-COUNT(*),
-
-'RUNNING',
-
-CURRENT_TIMESTAMP(),
-
-CURRENT_USER(),
-
-'Pipeline Started'
+    '{{ invocation_id }}',
+    '{{ this.identifier }}',
+    '{{ source_name }}.{{ source_table }}',
+    '{{ this }}',
+    '{% if is_incremental() %}INCREMENTAL{% else %}FULL{% endif %}',
+    COUNT(*),
+    'RUNNING',
+    CURRENT_TIMESTAMP(),
+    CURRENT_USER(),
+    'Pipeline Started'
 
 FROM {{ source(source_name, source_table) }};
 
 {% endmacro %}
 
 
-
 {% macro audit_post_hook() %}
 
-UPDATE SN_CITI_1.AUDIT.ETL_AUDIT_LOG
+UPDATE DBT_CITI_1.AUDIT_LOG.DBT_AUDIT_LOGG
 
 SET
 
-ROWS_PROCESSED =
-(
-SELECT COUNT(*)
-FROM {{ this }}
-WHERE BATCH_ID='{{ invocation_id }}'
-),
+    ROWS_PROCESSED =
+    (
+        SELECT COUNT(*)
+        FROM {{ this }}
+        WHERE BATCH_ID = '{{ invocation_id }}'
+    ),
 
-STATUS='SUCCESS',
+    STATUS = 'SUCCESS',
 
-END_TIME=CURRENT_TIMESTAMP(),
+    END_TIME = CURRENT_TIMESTAMP(),
 
-COMMENTS='Pipeline Completed'
+    COMMENTS = 'Pipeline Completed'
 
-WHERE BATCH_ID='{{ invocation_id }}';
+WHERE INVOCATION_ID = '{{ invocation_id }}';
 
 {% endmacro %}
