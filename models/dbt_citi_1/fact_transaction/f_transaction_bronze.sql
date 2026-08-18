@@ -1,8 +1,8 @@
 {{
     config(
         materialized='incremental',
-        pre_hook="{{ audit_pre_hook('DBT_Citi_1', 'F_TRANS_L') }}",
-        post_hook="{{ audit_post_hook() }}"
+        pre_hook=audit_pre_hook('DBT_Citi_1', 'F_TRANS_L'),
+        post_hook=audit_post_hook()
     )
 }}
 

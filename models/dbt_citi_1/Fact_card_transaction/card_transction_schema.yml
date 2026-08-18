@@ -1,0 +1,18 @@
+version: 2
+
+sources:
+  - name: citi_fact
+    database: SN_CITI_1
+    schema: FACT
+    tables:
+      - name: CARD_TRANSACTION
+
+models:
+  - name: card_transaction_bronze
+    description: >
+      Bronze layer table storing raw transaction data loaded from
+      SN_CITI_1.FACT.CARD_TRANSACTION with audit columns.
+
+    config:
+      database: DBT_CITI_1
+      schema: CARD_TRANSACTION

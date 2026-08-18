@@ -19,3 +19,6 @@ clean-targets:
 models:
   dbt_project:
     +materialized: table
+
+on-run-end:
+  - "{{ audit_error_log() }}"
