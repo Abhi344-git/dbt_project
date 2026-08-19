@@ -3,7 +3,7 @@
         materialized='incremental',
         database='DBT_CITI_1',
         schema='CARD_TRANSACTION',
-        pre_hook="{{ audit_pre_hook('DBT_CITI_1', 'CARD_TRANSACTION') }}",
+        pre_hook="{{ audit_pre_hook() }}",
         post_hook="{{ audit_post_hook() }}"
     )
 }}
