@@ -1,0 +1,18 @@
+version: 2
+
+sources:
+  - name: citi_fact
+    database: SN_CITI_1
+    schema: FACT
+    tables:
+      - name: ACCOUNT_BALANCE_JSON
+
+models:
+  - name: ac_balance_bronze
+    description: >
+      Bronze layer table storing raw transaction data loaded from
+      SN_CITI_1.FACT.ACCOUNT_BALANCE_JSON
+
+    config:
+      database: DBT_CITI_1
+      schema: account_balance
