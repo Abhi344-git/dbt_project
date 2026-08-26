@@ -4,3 +4,6 @@ target/
 dbt_packages/
 logs/
 dbt_internal_packages/
+*.p8
+*.pem
+rsa_key.p8
