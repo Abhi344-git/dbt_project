@@ -35,4 +35,4 @@ WHERE CURRENT_TIMESTAMP()::TIMESTAMP_NTZ > (
     )
     FROM {{ this }}
 )
-{% endif %}
+{% endif %} 
