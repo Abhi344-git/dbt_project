@@ -1,11 +1,11 @@
 {% macro trim_cap(columns) %}
 
-{% for column in columns %}
+    {% for column in columns %}
 
- initcap(trim{{column}})) as {{column}}
+        initcap(trim({{ column }})) as {{ column }}
 
- {% if not loop.last%},{% endif%}
+        {% if not loop.last %},{% endif %}
 
-{%endfor%}
+    {% endfor %}
 
-{%endmacro%}
+{% endmacro %}
