@@ -1,0 +1,41 @@
+version: 2
+
+sources:
+  - name: citi_fact
+    database: SN_CITI_1
+    schema: FACT
+    tables:
+      - name: FUND_TRANFER_PARQUE
+
+models:
+  - name: fund_transfer_bronze
+    description: >
+      Bronze layer table storing raw transaction data loaded from
+      SN_CITI_1.FACT.FUND_TRANFER_PARQUE
+
+    config:
+      database: DBT_CITI_1
+      schema: fund_transfer
+
+  - name: fund_transfer_silver
+    description: >
+      silver layer creation from bronze layer: fund_transfer_bronze
+
+    config:
+      database: DBT_CITI_1
+      schema: fund_transfer
+
+    columns:
+      - name: TRANSFER_ID
+        tests:
+          - unique:
+              config:
+                severity: warn
+
+      - name: status
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['SUCCESS', 'FAILED', 'PENDING']
+              config:
+                severity: warn
