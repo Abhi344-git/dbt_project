@@ -8,6 +8,7 @@ sources:
       - name: FUND_TRANFER_PARQUE
 
 models:
+
   - name: fund_transfer_bronze
     description: >
       Bronze layer table storing raw transaction data loaded from
@@ -19,7 +20,7 @@ models:
 
   - name: fund_transfer_silver
     description: >
-      silver layer creation from bronze layer: fund_transfer_bronze
+      Silver layer creation from bronze layer: fund_transfer_bronze
 
     config:
       database: DBT_CITI_1
@@ -39,3 +40,12 @@ models:
                 values: ['SUCCESS', 'FAILED', 'PENDING']
               config:
                 severity: warn
+
+  - name: ft_quarantine
+    description: >
+      Quarantine layer created from fund_transfer_bronze to separate
+      valid and invalid data while preserving the original invalid values.
+
+    config:
+      database: DBT_CITI_1
+      schema: fund_transfer
