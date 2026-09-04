@@ -2,10 +2,10 @@
 
     {% for column in columns %}
 
-        trim{{ column }})) as {{ column }}
+        trim({{ column }}) as {{ column }}
 
         {% if not loop.last %},{% endif %}
 
     {% endfor %}
 
-{% endmacro %} 
+{% endmacro %}
